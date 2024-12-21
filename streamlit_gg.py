@@ -67,7 +67,12 @@ def main():
     if df is not None and graph_type != "선택안함":
         if graph_type == "히스토그램":
             st.markdown("**히스토그램 옵션**")
-            bins = st.slider("빈(bin) 개수", 5, 100, 20, 1)
+            bins = st.slider("빈(bin) 개수", 5, 100, 10, 1)
+            try:
+                bin_width = (df[x_col].max() - df[x_col].min()) / bins  if bins > 0 else (x_col.max() - x_col.min())
+                st.write(f"빈(bin) 너비: {bin_width:.2f}")
+            except:
+                pass
 
             st.markdown("**그룹 옵션** (겹쳐진 히스토그램)")
             discrete_cols = [c for c in df.columns if not is_continuous(df[c])]
